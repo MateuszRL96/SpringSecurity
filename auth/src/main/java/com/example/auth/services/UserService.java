@@ -15,9 +15,18 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private JwtService jwtService;
 
     public User saveUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.saveAndFlush(user);
+    }
+
+    public String generateToken(String username){
+        return jwtService.generateToken(username);
+    }
+
+    public void validateToken(String token){
+        jwtService.validateToken(token);
     }
 }
