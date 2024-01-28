@@ -1,7 +1,7 @@
 package com.example.auth.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,22 +12,26 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-
-@NoArgsConstructor
+@Setter
+@Getter
 @Table(name = "users")
 @Entity
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_id_seq",sequenceName = "user_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "users_id_seq",sequenceName = "users_id_seq", allocationSize = 1)
     private long id;
     private String uuid;
     private String login;
     private String email;
     private String password;
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(name = "islock")
     private boolean isLock;
+    @Column(name = "isenabled")
     private boolean isEnabled;
 
     public User(long id, String uuid, String login, String email, String password, Role role, boolean isLock, boolean isEnabled) {
@@ -39,6 +43,10 @@ public class User implements UserDetails {
         this.role = role;
         this.isLock = isLock;
         this.isEnabled = isEnabled;
+        generateUuid();
+    }
+
+    public User() {
         generateUuid();
     }
 
