@@ -20,27 +20,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class UserConfiguration {
-
-    public UserConfiguration(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @NonNull
-    private  UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService(){
         return new CustomUserDetailsService(userRepository);
     }
 
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
-                .csrf().disable()
+                //.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/register").permitAll();
+                .requestMatchers("/api/v1/auth/register","/api/v1/auth/login","/api/v1/auth/validate")
+                .permitAll();
+                //.anyRequest().authenticated();
 
         return httpSecurity.build();
     }
@@ -79,4 +73,18 @@ public class UserConfiguration {
 
         return httpSecurity.build();
     }*/
+
+    /*
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+        httpSecurity
+                //.csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/register","/api/v1/auth/login","/api/v1/auth/validate")
+                .permitAll()
+                .anyRequest().authenticated();
+
+        return httpSecurity.build();
+    }
+     */
 }

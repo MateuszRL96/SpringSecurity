@@ -2,12 +2,15 @@ package com.example.auth.entity;
 
 
 import lombok.Builder;
+import lombok.Setter;
 
+@Setter
 @Builder
 public class UserRegisterDTO {
     private String login;
     private String email;
     private String password;
+    private Role role;
 
     public Role getRole() {
         return role;
@@ -16,10 +19,6 @@ public class UserRegisterDTO {
     public void setRole(Role role) {
         this.role = role;
     }
-
-    private Role role;
-
-
 
     public String getLogin() {
         return login;

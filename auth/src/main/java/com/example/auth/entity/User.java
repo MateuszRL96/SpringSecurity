@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Setter
-@Getter
 @Table(name = "users")
 @Entity
 public class User implements UserDetails {
@@ -23,9 +21,18 @@ public class User implements UserDetails {
     private long id;
     private String uuid;
     private String login;
+
+    public String getEmail() {
+        return email;
+    }
+
     private String email;
     private String password;
 
+
+    public Role getRole() {
+        return role;
+    }
 
     @Enumerated(EnumType.STRING)
     private Role role;
