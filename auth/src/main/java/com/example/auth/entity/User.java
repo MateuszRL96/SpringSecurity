@@ -11,7 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-
+@Getter
+@Setter
 @Table(name = "users")
 @Entity
 public class User implements UserDetails {
@@ -21,19 +22,8 @@ public class User implements UserDetails {
     private long id;
     private String uuid;
     private String login;
-
-    public String getEmail() {
-        return email;
-    }
-
     private String email;
     private String password;
-
-
-    public Role getRole() {
-        return role;
-    }
-
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name = "islock")
@@ -96,37 +86,5 @@ public class User implements UserDetails {
         if(uuid == null || uuid.isEmpty()) {
             setUuid(UUID.randomUUID().toString());
         }
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setLock(boolean lock) {
-        isLock = lock;
-    }
-
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
     }
 }

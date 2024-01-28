@@ -42,9 +42,6 @@ public class AuthController {
             return ResponseEntity.status(401).body(new AuthResponse(Code.A3));
         }
     }
-    @RequestMapping(path = "/hello", method = RequestMethod.GET)
-    public String getHello(){
-        return "Hello";
-    }
+
 
 }
