@@ -44,7 +44,7 @@ public class UserService {
         return jwtService.generateToken(username, exp);
     }
 
-    public void validateToken(HttpServletRequest request) throws ExpiredJwtException, IllegalArgumentException{
+    public void validateToken(HttpServletRequest request, HttpServletResponse response) throws ExpiredJwtException, IllegalArgumentException{
         String token = null;
         String refresh = null;
         for (Cookie value : Arrays.stream(request.getCookies()).toList()) {
@@ -58,7 +58,12 @@ public class UserService {
             jwtService.validateToken(token);
         }catch (IllegalArgumentException | ExpiredJwtException e){
             jwtService.validateToken(refresh);
+            Cookie refreshCokkie = cookiService.generateCookie("refresh", jwtService.refreshToken(refresh,refreshExp), refreshExp);
+            Cookie cookie = cookiService.generateCookie("Authorization", jwtService.refreshToken(refresh,exp), exp);
+            response.addCookie(cookie);
+            response.addCookie(refreshCokkie);
         }
+
 
     }
 
