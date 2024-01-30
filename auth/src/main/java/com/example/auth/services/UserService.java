@@ -1,6 +1,8 @@
 package com.example.auth.services;
 
 import com.example.auth.entity.*;
+import com.example.auth.exceptions.UserExistingWithEmail;
+import com.example.auth.exceptions.UserExistingWithName;
 import com.example.auth.repo.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -68,7 +70,13 @@ public class UserService {
     }
 
 
-    public void register(UserRegisterDTO userRegisterDTO) {
+    public void register(UserRegisterDTO userRegisterDTO) throws UserExistingWithEmail, UserExistingWithName{
+        userRepository.findUserByLogin(userRegisterDTO.getLogin()).ifPresent(value->{
+            throw new UserExistingWithName("Taki uzytkownik juz istnieje");
+        });
+        userRepository.findUserByEmail(userRegisterDTO.getEmail()).ifPresent(value->{
+            throw new UserExistingWithEmail("Taki email juz istnieje");
+        });
         User user = new User();
         user.setLogin(userRegisterDTO.getLogin());
         user.setPassword(userRegisterDTO.getPassword());
