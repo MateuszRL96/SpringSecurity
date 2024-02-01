@@ -20,8 +20,10 @@ public class User implements UserDetails {
     @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "users_id_seq",sequenceName = "users_id_seq", allocationSize = 1)
     private long id;
+    @Getter
     private String uuid;
     private String login;
+    @Getter
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
