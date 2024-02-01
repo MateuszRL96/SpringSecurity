@@ -1,6 +1,7 @@
 package com.example.auth.services;
 
 import com.example.auth.entity.*;
+import com.example.auth.exceptions.UserDontExistException;
 import com.example.auth.exceptions.UserExistingWithEmail;
 import com.example.auth.exceptions.UserExistingWithName;
 import com.example.auth.repo.UserRepository;
@@ -28,15 +29,13 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailService emailService;
     private final CookiService cookiService;
 
     @Value("${jwt.exp}")
     private int exp;
     @Value("${jwt.refresh.exp}")
     private int refreshExp;
-
-
-
 
     private User saveUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -70,11 +69,7 @@ public class UserService {
             response.addCookie(cookie);
             response.addCookie(refreshCokkie);
         }
-
-
     }
-
-
     public void register(UserRegisterDTO userRegisterDTO) throws UserExistingWithEmail, UserExistingWithName{
         userRepository.findUserByLogin(userRegisterDTO.getLogin()).ifPresent(value->{
             throw new UserExistingWithName("Taki uzytkownik juz istnieje");
@@ -83,19 +78,17 @@ public class UserService {
             throw new UserExistingWithEmail("Taki email juz istnieje");
         });
         User user = new User();
+        user.setLock(true);
         user.setLogin(userRegisterDTO.getLogin());
         user.setPassword(userRegisterDTO.getPassword());
         user.setEmail(userRegisterDTO.getEmail());
-        if(userRegisterDTO.getRole() != null){
-            user.setRole(userRegisterDTO.getRole());
-        }else{
-            user.setRole(Role.USER);
-        }
+        user.setRole(Role.USER);
         saveUser(user);
+        emailService.sendActivation(user);
     }
 
     public ResponseEntity<?> login(HttpServletResponse response, User authRequest) {
-        User user = userRepository.findUserByLogin(authRequest.getUsername()).orElse(null);
+        User user = userRepository.findUserByLoginAndLockAndEnabled(authRequest.getUsername()).orElse(null);
         if (user != null) {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
             if (authenticate.isAuthenticated()) {
@@ -150,6 +143,39 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(Code.A3));
         }
     }
+
+    public void activateUser(String uid) throws UserDontExistException {
+        User user = userRepository.findUserByUuid(uid).orElse(null);
+        if (user != null){
+            user.setLock(false);
+            userRepository.save(user);
+            return;
+        }
+        throw new UserDontExistException("User dont exist");
+    }
+
+    public void recoveryPassword(String email) throws UserDontExistException{
+        User user = userRepository.findUserByEmail(email).orElse(null);
+        if (user != null){
+            emailService.sendPasswordRecovery(user);
+            return;
+        }
+        throw new UserDontExistException("User dont exist");
+    }
+
+    public void restPassword(ChangePasswordData changePasswordData) throws UserDontExistException{
+        User user = userRepository.findUserByUuid(changePasswordData.getUid()).orElse(null);
+        if (user != null){
+            user.setPassword(changePasswordData.getPassword());
+            saveUser(user);
+            return;
+        }
+        throw new UserDontExistException("User dont exist");
+    }
+
+
+
+
 
 }
 

@@ -22,7 +22,7 @@ public class EmailService {
     private String frontendUrl;
 
     @Value("classpath:static/mail-active.html")
-    Resource activeTemplate;
+    private Resource activeTemplate;
 
     public void sendActivation(User user) {
         try {
@@ -30,6 +30,16 @@ public class EmailService {
             html = html.replace("https://google.com", frontendUrl+"/aktywuj/"+user.getUuid());
             emailConfiguration.sendMail(user.getEmail(), html, "Aktywacja konta",true);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendPasswordRecovery(User user) {
+        try{
+            String html = Files.toString(activeTemplate.getFile(), Charsets.UTF_8);
+            html = html.replace("https://google.com", frontendUrl+"/odzyskaj-haslo/"+user.getUuid());
+            emailConfiguration.sendMail(user.getEmail(), html, "Odzyskane haslo",true);
+        }catch( IOException e){
             throw new RuntimeException(e);
         }
     }
