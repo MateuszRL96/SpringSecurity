@@ -1,27 +1,48 @@
 package com.example.auth.services;
 
+import com.example.auth.entity.ResetOperations;
 import com.example.auth.entity.User;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.auth.repo.ResetOperationsRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
-@Table(name = "resetoperations")
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+@EnableScheduling
 public class ResetOperationService {
-    @Id
-    @GeneratedValue(generator = "resetoperations_id_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "resetoperations_id_seq", sequenceName = "resetoperations_id_seq",allocationSize = 1)
-    private long id;
-    @ManyToOne
-    @JoinColumn(name = "users")
-    private User user;
-    @Column(name = "createdate")
-    private String createDate;
-    private String uid;
+
+    private final ResetOperationsRepository resetOperationsRepository;
+
+
+    @Transactional
+    public ResetOperations initResetOperation(User user){
+        ResetOperations resetOperations = new ResetOperations();
+
+        resetOperations.setUid(UUID.randomUUID().toString());
+        resetOperations.setCreateDate(new Timestamp(System.currentTimeMillis()).toString());
+        resetOperations.setUser(user);
+
+        resetOperationsRepository.deleteAllByUser(user);
+
+        return resetOperationsRepository.saveAndFlush(resetOperations);
+    }
+
+    public void endOperation(String uid){
+        resetOperationsRepository.findByUid(uid).ifPresent(resetOperationsRepository::delete);
+    }
+
+    @Scheduled(cron = "0 0/1 * * * *")
+    protected void deleteExpireOperation(){
+        List<ResetOperations> resetOperations = resetOperationsRepository.findExpiredOperations();
+        if (resetOperations != null && !resetOperations.isEmpty()){
+            resetOperationsRepository.deleteAll(resetOperations);
+        }
+    }
 }
