@@ -24,3 +24,4 @@ public class ResetOperations {
     private String createDate;
     private String uid;
 }
+
