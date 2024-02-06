@@ -4,12 +4,15 @@ import com.example.auth.entity.*;
 import com.example.auth.exceptions.UserDontExistException;
 import com.example.auth.exceptions.UserExistingWithEmail;
 import com.example.auth.exceptions.UserExistingWithName;
+import com.example.auth.repo.ResetOperationsRepository;
 import com.example.auth.repo.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,19 +27,20 @@ import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ResetOperationService resetOperationService;
+    private final ResetOperationsRepository resetOperationsRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
     private final CookiService cookiService;
-
     @Value("${jwt.exp}")
     private int exp;
     @Value("${jwt.refresh.exp}")
     private int refreshExp;
-
     private User saveUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.saveAndFlush(user);
@@ -45,6 +49,20 @@ public class UserService {
     private String generateToken(String username, int exp){
         return jwtService.generateToken(username, exp);
     }
+
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
+        log.info("Delete all cookies");
+        Cookie cookie = cookiService.removeCookie(request.getCookies(),"Authorization");
+        if (cookie != null){
+            response.addCookie(cookie);
+        }
+        cookie = cookiService.removeCookie(request.getCookies(),"refresh");
+        if (cookie != null){
+            response.addCookie(cookie);
+        }
+        return  ResponseEntity.ok(new AuthResponse(Code.SUCCESS));
+    }
+
 
     public void validateToken(HttpServletRequest request, HttpServletResponse response) throws ExpiredJwtException, IllegalArgumentException{
         String token = null;
@@ -157,25 +175,30 @@ public class UserService {
     public void recoveryPassword(String email) throws UserDontExistException{
         User user = userRepository.findUserByEmail(email).orElse(null);
         if (user != null){
-            emailService.sendPasswordRecovery(user);
+            ResetOperations resetOperations = resetOperationService.initResetOperation(user);
+            emailService.sendPasswordRecovery(user,resetOperations.getUid());
+
             return;
         }
+        log.info("User dont exist");
         throw new UserDontExistException("User dont exist");
     }
 
+    @Transactional
     public void restPassword(ChangePasswordData changePasswordData) throws UserDontExistException{
-        User user = userRepository.findUserByUuid(changePasswordData.getUid()).orElse(null);
-        if (user != null){
-            user.setPassword(changePasswordData.getPassword());
-            saveUser(user);
-            return;
+        ResetOperations resetOperations = resetOperationsRepository.findByUid(changePasswordData.getUid()).orElse(null);
+        if(resetOperations != null) {
+            User user = userRepository.findUserByUuid(resetOperations.getUid()).orElse(null);
+
+            if (user != null) {
+                user.setPassword(changePasswordData.getPassword());
+                saveUser(user);
+                resetOperationService.endOperation(resetOperations.getUid());
+                return;
+            }
         }
         throw new UserDontExistException("User dont exist");
     }
-
-
-
-
 
 }
 

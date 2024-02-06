@@ -11,12 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-@Getter
 @Setter
 @Table(name = "users")
 @Entity
 public class User implements UserDetails {
-    @Id
+
+    @Getter@Id
     @GeneratedValue(generator = "users_id_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "users_id_seq",sequenceName = "users_id_seq", allocationSize = 1)
     private long id;
@@ -26,6 +26,7 @@ public class User implements UserDetails {
     @Getter
     private String email;
     private String password;
+    @Getter
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name = "islock")
@@ -89,4 +90,5 @@ public class User implements UserDetails {
             setUuid(UUID.randomUUID().toString());
         }
     }
+
 }

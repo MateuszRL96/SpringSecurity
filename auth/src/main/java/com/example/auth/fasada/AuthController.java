@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
     private final UserService userService;
 
@@ -49,6 +51,13 @@ public class AuthController {
     public ResponseEntity<?> loggedIn(HttpServletResponse response, HttpServletRequest request){
         return userService.loggedIn(request, response);
     }
+
+    @RequestMapping(path = "/logout",method = RequestMethod.GET)
+    public ResponseEntity<?> logout( HttpServletResponse response,HttpServletRequest request){
+        log.info("--TRY LOGOUT USER");
+        return userService.logout(request, response);
+    }
+
 
     @RequestMapping(path = "/validate",method = RequestMethod.GET)
     public ResponseEntity<AuthResponse> validateToken(HttpServletRequest request, HttpServletResponse response) {

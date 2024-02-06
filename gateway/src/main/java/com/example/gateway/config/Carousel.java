@@ -2,12 +2,14 @@ package com.example.gateway.config;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class Carousel {
 
     private final EurekaClient eurekaClient;
@@ -17,7 +19,11 @@ public class Carousel {
 
     public Carousel(EurekaClient eurekaClient){
         this.eurekaClient = eurekaClient;
-        initAuthCarousel();
+        try{
+            initAuthCarousel();
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
         events();
     }
 
@@ -38,7 +44,11 @@ public class Carousel {
             initAuthCarousel();
         });
         eurekaClient.unregisterEventListener(eurekaEvent -> {
-            initAuthCarousel();
+            try {
+                initAuthCarousel();
+            } catch(NullPointerException e){
+                e.printStackTrace();
+            }
         });
     }
 
