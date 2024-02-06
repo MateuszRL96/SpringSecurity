@@ -15,6 +15,6 @@ public interface ResetOperationsRepository extends JpaRepository<ResetOperations
     @Modifying
     void deleteAllByUser(User user);
     Optional<ResetOperations> findByUid(String uid);
-    @Query(nativeQuery = true, value = "SELECT * FROM resetoperations where creatdate <= current_timestamp - INTERVAL '1 minutes'")
+    @Query(nativeQuery = true, value = "SELECT * FROM resetoperations where createdate <= current_timestamp - INTERVAL '1 minutes'")
     List<ResetOperations> findExpiredOperations();
 }
