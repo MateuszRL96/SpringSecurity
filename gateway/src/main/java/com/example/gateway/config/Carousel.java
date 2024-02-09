@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Slf4j
 public class Carousel {
 
     private final EurekaClient eurekaClient;
