@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,7 +94,7 @@ public class UserService {
         userRepository.findUserByEmail(userRegisterDTO.getEmail()).ifPresent(value->{
             throw new UserExistingWithEmail("Taki email juz istnieje");
         });
-        User user = new User();
+        User user = new User(1, 12345678, "Mateusz1", "mateusz@gmail.com", USER, true, true);
         user.setLock(true);
         user.setLogin(userRegisterDTO.getLogin());
         user.setPassword(userRegisterDTO.getPassword());
