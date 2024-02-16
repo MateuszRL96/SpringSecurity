@@ -34,7 +34,7 @@ public class User implements UserDetails {
     @Column(name = "isenabled")
     private boolean isEnabled;
 
-    public User(long id, String uuid, String login, String email, String password, Role role, boolean isLock, boolean isEnabled) {
+    public User() {
         this.id = id;
         this.uuid = uuid;
         this.login = login;

@@ -94,7 +94,7 @@ public class UserService {
         userRepository.findUserByEmail(userRegisterDTO.getEmail()).ifPresent(value->{
             throw new UserExistingWithEmail("Taki email juz istnieje");
         });
-        User user = new User(1, 12345678, "Mateusz1", "mateusz@gmail.com", USER, true, true);
+        User user = new User();
         user.setLock(true);
         user.setLogin(userRegisterDTO.getLogin());
         user.setPassword(userRegisterDTO.getPassword());
