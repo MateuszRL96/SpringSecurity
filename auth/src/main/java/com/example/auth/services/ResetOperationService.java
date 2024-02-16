@@ -33,7 +33,7 @@ public class ResetOperationService {
         resetOperations.setUser(user);
 
         resetOperationsRepository.deleteAllByUser(user);
-
+        log.info("--STOP initResetOperation");
         return resetOperationsRepository.saveAndFlush(resetOperations);
     }
 
@@ -48,5 +48,6 @@ public class ResetOperationService {
         if (resetOperations != null && !resetOperations.isEmpty()){
             resetOperationsRepository.deleteAll(resetOperations);
         }
+
     }
 }

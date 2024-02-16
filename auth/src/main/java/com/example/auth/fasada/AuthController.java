@@ -27,11 +27,15 @@ public class AuthController {
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public ResponseEntity<AuthResponse> addNewUser(@Valid @RequestBody UserRegisterDTO user){
         try{
+            log.info("--START REGISTER USER");
             userService.register(user);
+            log.info("--STOP REGISTER USER");
             return ResponseEntity.ok(new AuthResponse(Code.SUCCESS));
         }catch (UserExistingWithName e1){
+            log.info("User dont exist in database");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(Code.A4));
         } catch (UserExistingWithEmail e2){
+            log.info("User dont exist in database with this mail");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(Code.A5));
         }
 
@@ -39,16 +43,19 @@ public class AuthController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response){
+        log.info("--TRY LOGIN USER");
         return userService.login(response, user);
     }
 
     @RequestMapping(path = "/auto-login", method = RequestMethod.GET)
     public ResponseEntity<?> autoLogin(HttpServletResponse response, HttpServletRequest request){
+        log.info("--TRY AUTO-LOGIN USER");
         return userService.loginByToken(request, response);
     }
 
     @RequestMapping(path = "/logged-in", method = RequestMethod.GET)
     public ResponseEntity<?> loggedIn(HttpServletResponse response, HttpServletRequest request){
+        log.info("--CHECK USER LOGGED-IN");
         return userService.loggedIn(request, response);
     }
 

@@ -75,6 +75,7 @@ public class UserService {
                 }
             }
         }else {
+            log.info("Can't login because in token is empty");
             throw new IllegalArgumentException("Token cant be null");
         }
         try {
@@ -121,11 +122,15 @@ public class UserService {
                                 .role(user.getRole())
                                 .build());
             } else {
+                log.info("--STOP LoginService");
                 return ResponseEntity.ok(new AuthResponse(Code.A1));
             }
         }
+        log.info("User don't exist");
+        log.info("--STOP LoginService");
         return ResponseEntity.ok(new AuthResponse(Code.A2));
     }
+
 
     public ResponseEntity<LoginResponse> loggedIn(HttpServletRequest request, HttpServletResponse response){
         try{
@@ -155,11 +160,22 @@ public class UserService {
                                 .role(user.getRole())
                                 .build());
             }
+            log.info("Can't login user don't exist");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(Code.A1));
         }catch (ExpiredJwtException|IllegalArgumentException e){
+            log.info("Can't login token is expired or null");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(Code.A3));
         }
     }
+
+    public void setAsAdmin(UserRegisterDTO user) {
+        userRepository.findUserByLogin(user.getLogin()).ifPresent(value->{
+            value.setRole(Role.ADMIN);
+            userRepository.save(value);
+        });
+    }
+
+
 
     public void activateUser(String uid) throws UserDontExistException {
         User user = userRepository.findUserByUuid(uid).orElse(null);
