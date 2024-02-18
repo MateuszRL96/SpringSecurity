@@ -21,7 +21,7 @@ public class Product {
     private String mainDescription;
     private String descHtml;
     private float price;
-    private Set<String> imageUrls;
+    private String[] imageUrls;
     private Map<String, String> parameters;
     private LocalDate createDate;
     private PoziomTrudnosci poziomTrudnosci;
