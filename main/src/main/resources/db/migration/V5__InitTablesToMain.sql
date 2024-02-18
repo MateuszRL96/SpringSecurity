@@ -1,10 +1,10 @@
-CREATE TABLE Category (
+CREATE TABLE category (
     id                  SERIAL                                  PRIMARY KEY,
     name                VARCHAR(255)                            NOT NULL,
     shortId             VARCHAR(50)                             NOT NULL
 );
 
-CREATE TABLE Product (
+CREATE TABLE product (
     productId           SERIAL                                  PRIMARY KEY,
     uid                 VARCHAR(50)                             NOT NULL,
     active              BOOLEAN                                 NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE Product (
     poziomTrudnosci     VARCHAR(50)
 );
 
-CREATE TABLE ProductDTO (
+CREATE TABLE productdto (
     productId           SERIAL                                  PRIMARY KEY,
     uid                 VARCHAR(50)                             NOT NULL,
     active              BOOLEAN                                 NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE ProductDTO (
     categoryId          BIGINT
 );
 
-CREATE TABLE ProductRating (
+CREATE TABLE productrating (
     ratingId            SERIAL                                  PRIMARY KEY,
     productId           BIGINT REFERENCES Product(productId)    NOT NULL,
     ocenaUsera          FLOAT                                   NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE ProductRating (
     FOREIGN KEY (productId) REFERENCES Product(productId)
 );
 
-CREATE TABLE ProductStep (
+CREATE TABLE productstep (
     stepId              SERIAL                                  PRIMARY KEY,
     productId           BIGINT REFERENCES Product(productId)    NOT NULL,
     stepContent         TEXT,
@@ -51,13 +51,13 @@ CREATE TABLE ProductStep (
     FOREIGN KEY (productId) REFERENCES Product(productId)
 );
 
-CREATE TABLE Qualification (
+CREATE TABLE qualification (
     id                  SERIAL                                  PRIMARY KEY,
     qualificationName   VARCHAR(255)                            NOT NULL,
     qualificationDescription TEXT
 );
 
-CREATE TABLE UserProgress (
+CREATE TABLE userprogress (
     userProgressId      SERIAL                                  PRIMARY KEY,
     productId           BIGINT REFERENCES Product(productId)    NOT NULL,
     startDate           TIMESTAMP,
