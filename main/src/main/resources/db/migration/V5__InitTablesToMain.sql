@@ -13,7 +13,7 @@ CREATE TABLE product (
     descHtml            TEXT,
     price               FLOAT                                   NOT NULL,
     imageUrls           VARCHAR[]                               NOT NULL,
-    parameters          JSONB,
+    parameters          JSON,
     createDate          DATE,
     poziomTrudnosci     VARCHAR(50)
 );
@@ -52,9 +52,9 @@ CREATE TABLE productstep (
 );
 
 CREATE TABLE qualification (
-    id                  SERIAL                                  PRIMARY KEY,
-    qualificationName   VARCHAR(255)                            NOT NULL,
-    qualificationDescription TEXT
+    id                          SERIAL                          PRIMARY KEY,
+    qualificationName           VARCHAR(255)                    NOT NULL,
+    qualificationDescription    TEXT
 );
 
 CREATE TABLE userprogress (
