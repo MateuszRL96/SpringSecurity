@@ -1,6 +1,7 @@
 package com.example.main.mediator;
 
 import com.example.main.entity.dto.CategoryDTO;
+import com.example.main.exceptions.ObjectExistInDBException;
 import com.example.main.service.CategoryService;
 import com.example.main.translator.CategoryToCategoryDTO;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,10 @@ public class CategoryMediator {
             categoryDTOS.add(categoryToCategoryDTO.toCategoryDTO(value));
         });
         return ResponseEntity.ok(categoryDTOS);
+    }
+
+    public void createCategory(CategoryDTO categoryDTO) throws ObjectExistInDBException {
+        categoryService.create(categoryDTO);
     }
 }
 

@@ -1,29 +1,27 @@
 package com.example.main.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Table(name = "product")
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
+@Setter
 public class ProductEntity extends Product{
+    @Id
+    @GeneratedValue(generator = "product_id_seq",strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "product_id_seq",sequenceName = "product_id_seq", allocationSize = 1)
+    private long productId;
     @ManyToOne
     @JoinColumn(name = "category")
     private Category category;
-
-
     public ProductEntity(long productId, String uid, boolean active, String name, String mainDescription, String descHtml, float price, String[] imageUrls,
                          String parameters, LocalDate createDate, PoziomTrudnosci poziomTrudnosci, Category category) {
-        super(productId, uid, active, name, mainDescription, descHtml, price, imageUrls, parameters, createDate, poziomTrudnosci);
+        super(uid, active, name, mainDescription, descHtml, price, imageUrls, parameters, createDate, poziomTrudnosci);
         this.category = category;
+        this.productId = productId;
     }
 }

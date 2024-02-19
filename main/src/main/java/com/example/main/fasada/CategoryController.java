@@ -1,13 +1,12 @@
 package com.example.main.fasada;
 
+import com.example.main.entity.Response;
 import com.example.main.entity.dto.CategoryDTO;
+import com.example.main.exceptions.ObjectExistInDBException;
 import com.example.main.mediator.CategoryMediator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +22,14 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDTO>> getCategory(){
         return categoryMediator.getCategory();
     }
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
+        try {
+            categoryMediator.createCategory(categoryDTO);
+        } catch (ObjectExistInDBException e) {
+            return ResponseEntity.status(400).body(new Response("Object exist in DB"));
+        }
+        return ResponseEntity.ok(new Response("Operation end Success"));
+    }
+
 }
