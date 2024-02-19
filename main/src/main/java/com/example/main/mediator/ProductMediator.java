@@ -1,12 +1,17 @@
 package com.example.main.mediator;
 
 
+import com.example.main.entity.Response;
 import com.example.main.entity.dto.ProductDTO;
 import com.example.main.entity.ProductEntity;
+import com.example.main.entity.dto.ProductFormDTO;
 import com.example.main.entity.dto.SimpleProductDTO;
+import com.example.main.exceptions.CategoryDontExistException;
+import com.example.main.service.CategoryService;
 import com.example.main.service.ProductService;
 import com.example.main.translator.ProductEntityToProductDTO;
 import com.example.main.translator.ProductEntityToSimpleProduct;
+import com.example.main.translator.ProductFormToProductEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,8 +25,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductMediator {
     private final ProductService productService;
+    private final CategoryService categoryService;
     private final ProductEntityToSimpleProduct productEntityToSimpleProduct;
     private final ProductEntityToProductDTO productEntityToProductDTO;
+    private final ProductFormToProductEntity formToProductEntity;
 
     public ResponseEntity<?> getProduct(int page, int limit, String name, String category, Float price_min, Float price_max, String data, String sort, String order) {
         List<ProductEntity> product = productService.getProduct(name, category, price_min, price_max, data, page, limit, sort, order);
@@ -43,5 +50,20 @@ public class ProductMediator {
         ProductDTO productDTO = productEntityToProductDTO.toProductDTO(product.get(0));
         return ResponseEntity.ok().body(productDTO);
     }
+
+    public ResponseEntity<Response> saveProduct(ProductFormDTO productFormDTO) {
+        try{
+            ProductEntity product = formToProductEntity.toProductEntity(productFormDTO);
+            categoryService.findCategoryByShortID(product.getCategory().getShortId()).ifPresentOrElse(product::setCategory,()->{
+                throw new CategoryDontExistException();
+            });
+            productService.createProduct(product);
+            return ResponseEntity.ok(new Response("Successful created a product"));
+        }catch (RuntimeException e){
+            return ResponseEntity.status(400).body(new Response("Can't create product category don't exist"));
+        }
+
+    }
+
 }
 

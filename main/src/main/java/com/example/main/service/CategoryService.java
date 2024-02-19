@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,6 +20,11 @@ public class CategoryService {
     public List<Category> getCategory(){
         return categoryRepository.findAll();
     }
+
+    public Optional<Category> findCategoryByShortID(String shortID){
+        return categoryRepository.findByShortId(shortID);
+    }
+
 
     public void create(CategoryDTO categoryDTO) throws ObjectExistInDBException {
         Category category = new Category();

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,6 @@ public class ProductService {
     EntityManager entityManager;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-
     public List<ProductEntity> getProduct(String name,
                                           String category,
                                           Float price_min,
@@ -97,7 +97,6 @@ public class ProductService {
         }
         predicates.add(criteriaBuilder.isTrue(root.get("activate")));
         return predicates;
-
     }
     public long countActiveProducts(String name, String category, Float price_min, Float price_max){
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -106,7 +105,18 @@ public class ProductService {
         List<Predicate> predicates = prepareQuery(name,category,price_min,price_max,criteriaBuilder,root);
         query.select(criteriaBuilder.count(root)).where(predicates.toArray(new Predicate[0]));
         return entityManager.createQuery(query).getSingleResult();
+    }
 
+    public void createProduct(ProductEntity product) {
+        if (product != null){
+            product.setCreateDate(LocalDate.now());
+            product.setUid(UUID.randomUUID().toString());
+            product.setActive(true);
+            productRepository.save(product);
+            //TODO AKTYWACJA GRAFIK
+            return;
+        }
+        throw new RuntimeException();
     }
 
 }
