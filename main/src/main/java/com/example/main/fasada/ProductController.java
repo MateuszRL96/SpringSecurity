@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/product")
 @RequiredArgsConstructor
+//@CrossOrigin(origins = "*",maxAge = 3600,allowedHeaders = "*",exposedHeaders = "X-Total-Count")
 public class ProductController {
 
     private final ProductMediator productMediator;
@@ -31,6 +32,10 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Response> save(@RequestBody ProductFormDTO productFormDTO){
         return productMediator.saveProduct(productFormDTO);
+    }
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<Response> delete(@RequestParam String uuid){
+        return productMediator.deleteProduct(uuid);
     }
 
 
