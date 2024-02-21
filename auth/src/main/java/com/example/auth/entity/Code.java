@@ -1,9 +1,9 @@
 package com.example.auth.entity;
 
 public enum Code {
-    SUCCESS("Operacja zakończona sukcesen"),
+    SUCCESS("Operacja zakończona sukcesem"),
     PERMIT("Przyznano dostep"),
-    A1("taki uzytkownik nie istieje lub nie aktywowal konta"),
+    A1("taki uzytkownik nie istnieje lub nie aktywowal konta"),
     A2("Użytkownik o wskazanej nazwie nie istnieje"),
     A3("Wskazany token jest pusty lub nie ważny"),
     A4("Uzytkownik o takiej nazwie juz istnieje"),
