@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.springframework.stereotype.Component;
 
-
 @Mapper
 public abstract class CategoryToCategoryDTO {
 

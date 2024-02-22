@@ -5,8 +5,10 @@ import com.example.main.entity.SimpleProductDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public abstract class ProductEntityToSimpleProduct {
     public SimpleProductDTO toSimpleProduct(ProductEntity productEntity){
         return toSimpleProductDTO(productEntity);

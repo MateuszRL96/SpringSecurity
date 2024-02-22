@@ -14,8 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CategoryMediator {
-    private final CategoryService categoryService;
+
     private final CategoryToCategoryDTO categoryToCategoryDTO;
+    private final CategoryService categoryService;
 
     public ResponseEntity<List<CategoryDTO>> getCategory() {
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
