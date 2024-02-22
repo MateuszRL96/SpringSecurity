@@ -16,6 +16,7 @@ import java.util.List;
 //@CrossOrigin(origins = "*",maxAge = 3600)
 public class CategoryController {
     private final CategoryMediator categoryMediator;
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoryDTO>> getCategory(){
         return categoryMediator.getCategory();

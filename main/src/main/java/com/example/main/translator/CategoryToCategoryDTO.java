@@ -4,6 +4,8 @@ import com.example.main.entity.Category;
 import com.example.main.entity.CategoryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
+import org.springframework.stereotype.Component;
+
 
 @Mapper
 public abstract class CategoryToCategoryDTO {
