@@ -2,10 +2,10 @@ package com.example.main.mediator;
 
 
 import com.example.main.entity.Response;
-import com.example.main.entity.dto.ProductDTO;
+import com.example.main.entity.ProductDTO;
 import com.example.main.entity.ProductEntity;
-import com.example.main.entity.dto.ProductFormDTO;
-import com.example.main.entity.dto.SimpleProductDTO;
+import com.example.main.entity.ProductFormDTO;
+import com.example.main.entity.SimpleProductDTO;
 import com.example.main.exceptions.CategoryDontExistException;
 import com.example.main.service.CategoryService;
 import com.example.main.service.ProductService;

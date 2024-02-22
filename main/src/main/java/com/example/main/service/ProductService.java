@@ -120,9 +120,9 @@ public class ProductService {
     @Transactional
     public void createProduct(ProductEntity product) {
         if (product != null){
-            product.setCreateDate(LocalDate.now());
+            product.setCreateAt(LocalDate.now());
             product.setUid(UUID.randomUUID().toString());
-            product.setActive(true);
+            product.setActivate(true);
             productRepository.save(product);
             //TODO AKTYWACJA GRAFIK
             for (String uuid: product.getImageUrls()){
@@ -148,7 +148,7 @@ public class ProductService {
     @Transactional
     public void delete(String uuid) throws RuntimeException {
         productRepository.findByUid(uuid).ifPresentOrElse(value->{
-            value.setActive(false);
+            value.setActivate(false);
             productRepository.save(value);
             for (String image:value.getImageUrls()) {
                 deleteImages(image);

@@ -39,6 +39,7 @@
           <option value="auth" />
           <option value="auth" />
           <option value="auth" />
+          <option value="main" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -67,6 +68,7 @@
           <option value="org.springframework.boot:spring-boot:3.1.4" />
           <option value="org.springframework:spring-web:6.0.12" />
           <option value="org.yaml:snakeyaml:1.33" />
+          <option value="com.fasterxml.woodstox:woodstox-core:6.2.1" />
         </list>
       </option>
       <option name="ignoredReasons">
@@ -83,6 +85,7 @@
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Other" />
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />

@@ -1,7 +1,7 @@
 package com.example.main.fasada;
 
 import com.example.main.entity.Response;
-import com.example.main.entity.dto.CategoryDTO;
+import com.example.main.entity.CategoryDTO;
 import com.example.main.exceptions.ObjectExistInDBException;
 import com.example.main.mediator.CategoryMediator;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,7 @@ public class CategoryController {
     public ResponseEntity<List<CategoryDTO>> getCategory(){
         return categoryMediator.getCategory();
     }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
         try {

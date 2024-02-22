@@ -14,14 +14,14 @@ import java.time.LocalDate;
 @MappedSuperclass
 public class Product {
     private String uid;
-    private boolean active;
+    private boolean activate;
     @Column(name = "product_name")
     private String name;
-    private String mainDescription;
+    private String mainDesc;
     private String descHtml;
     private float price;
     private String[] imageUrls;
     private String parameters;
-    private LocalDate createDate;
-    private PoziomTrudnosci poziomTrudnosci;
+    private LocalDate createAt;
+
 }

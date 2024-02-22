@@ -5,23 +5,23 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Table(name = "product")
+@Table(name = "products")
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 public class ProductEntity extends Product{
     @Id
-    @GeneratedValue(generator = "product_id_seq",strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "product_id_seq",sequenceName = "product_id_seq", allocationSize = 1)
-    private long productId;
+    @GeneratedValue(generator = "products_id_seq",strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "products_id_seq",sequenceName = "products_id_seq", allocationSize = 1)
+    private long id;
     @ManyToOne
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "category_parameters")
     private Category category;
-    public ProductEntity(long productId, String uid, boolean active, String name, String mainDescription, String descHtml, float price, String[] imageUrls,
-                         String parameters, LocalDate createDate, PoziomTrudnosci poziomTrudnosci, Category category) {
-        super(uid, active, name, mainDescription, descHtml, price, imageUrls, parameters, createDate, poziomTrudnosci);
+    public ProductEntity(long id, String uid, boolean activate, String name, String mainDesc, String descHtml, float price, String[] imageUrls, String parameters, LocalDate createAt, Category category) {
+        super(uid, activate, name, mainDesc, descHtml, price, imageUrls, parameters, createAt);
         this.category = category;
-        this.productId = productId;
+        this.id = id;
     }
+
 }

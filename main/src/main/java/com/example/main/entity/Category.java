@@ -10,11 +10,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "category")
+@Entity
+@Table(name = "category_parameters")
 public class Category {
     @Id
-    @GeneratedValue(generator = "category_id_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "category_id_seq", sequenceName = "category_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "category_parameters_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "category_parameters_id_seq", sequenceName = "category_parameters_id_seq", allocationSize = 1)
     private long id;
     @Column(name = "category_name")
     private String name;

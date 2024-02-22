@@ -1,4 +1,4 @@
-package com.example.main.entity.dto;
+package com.example.main.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +10,7 @@ import lombok.Setter;
 public class CategoryDTO {
     private String name;
     private String shortId;
+
 
     public CategoryDTO(String name, String shortId) {
         this.name = name;

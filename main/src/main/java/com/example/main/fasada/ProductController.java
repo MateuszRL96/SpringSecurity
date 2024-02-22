@@ -2,9 +2,8 @@ package com.example.main.fasada;
 
 
 import com.example.main.entity.Response;
-import com.example.main.entity.dto.ProductFormDTO;
+import com.example.main.entity.ProductFormDTO;
 import com.example.main.mediator.ProductMediator;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

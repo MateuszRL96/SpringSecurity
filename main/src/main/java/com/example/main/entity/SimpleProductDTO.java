@@ -1,21 +1,21 @@
-package com.example.main.entity.dto;
+package com.example.main.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductFormDTO {
+public class SimpleProductDTO {
     private String name;
     private String mainDesc;
-    private String descHtml;
     private float price;
-    private String[] imagesUuid;
-    private String parameters;
-    private String category;
+    private String imageUrl;
+    private LocalDate createAt;
 }
 

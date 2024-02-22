@@ -1,7 +1,7 @@
 package com.example.main.service;
 
 import com.example.main.entity.Category;
-import com.example.main.entity.dto.CategoryDTO;
+import com.example.main.entity.CategoryDTO;
 import com.example.main.exceptions.ObjectExistInDBException;
 import com.example.main.repo.CategoryRepository;
 import lombok.RequiredArgsConstructor;

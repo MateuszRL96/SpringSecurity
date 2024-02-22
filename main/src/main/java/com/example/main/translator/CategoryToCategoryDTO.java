@@ -1,7 +1,7 @@
 package com.example.main.translator;
 
 import com.example.main.entity.Category;
-import com.example.main.entity.dto.CategoryDTO;
+import com.example.main.entity.CategoryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 
@@ -15,4 +15,5 @@ public abstract class CategoryToCategoryDTO {
     @Mappings({})
     protected abstract CategoryDTO translateToCategoryDTO(Category category);
 }
+
 
