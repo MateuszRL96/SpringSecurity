@@ -1,8 +1,6 @@
-package com.example.main.entity;
+package com.example.main.entity.product;
 
-import com.example.main.entity.CategoryDTO;
-import com.example.main.entity.Product;
-import jakarta.persistence.Entity;
+import com.example.main.entity.category.CategoryDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

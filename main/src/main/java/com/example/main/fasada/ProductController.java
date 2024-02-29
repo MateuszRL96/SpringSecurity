@@ -2,7 +2,7 @@ package com.example.main.fasada;
 
 
 import com.example.main.entity.Response;
-import com.example.main.entity.ProductFormDTO;
+import com.example.main.entity.product.ProductFormDTO;
 import com.example.main.mediator.ProductMediator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

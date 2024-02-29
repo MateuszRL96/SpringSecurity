@@ -1,8 +1,8 @@
 package com.example.main.translator;
 
-import com.example.main.entity.Category;
-import com.example.main.entity.ProductEntity;
-import com.example.main.entity.ProductFormDTO;
+import com.example.main.entity.category.Category;
+import com.example.main.entity.product.ProductEntity;
+import com.example.main.entity.product.ProductFormDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

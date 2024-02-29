@@ -1,10 +1,9 @@
 package com.example.main.translator;
 
-import com.example.main.entity.Category;
-import com.example.main.entity.CategoryDTO;
+import com.example.main.entity.category.Category;
+import com.example.main.entity.category.CategoryDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
-import org.springframework.stereotype.Component;
 
 @Mapper
 public abstract class CategoryToCategoryDTO {
