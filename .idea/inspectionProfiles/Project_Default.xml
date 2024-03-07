@@ -41,6 +41,10 @@
           <option value="auth" />
           <option value="main" />
           <option value="main" />
+          <option value="main" />
+          <option value="main" />
+          <option value="main" />
+          <option value="main" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -71,6 +75,10 @@
           <option value="org.yaml:snakeyaml:1.33" />
           <option value="com.fasterxml.woodstox:woodstox-core:6.2.1" />
           <option value="org.springframework:spring-web:6.0.12" />
+          <option value="org.postgresql:postgresql:42.6.0" />
+          <option value="com.google.guava:guava:28.2-android" />
+          <option value="com.jayway.jsonpath:json-path:2.8.0" />
+          <option value="com.thoughtworks.xstream:xstream:1.4.19" />
         </list>
       </option>
       <option name="ignoredReasons">
@@ -87,6 +95,10 @@
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Other" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />

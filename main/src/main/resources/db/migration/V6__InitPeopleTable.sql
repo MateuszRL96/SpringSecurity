@@ -1,4 +1,4 @@
-CREATE TABLE people_table (
+CREATE TABLE people (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     last_name VARCHAR(255),
