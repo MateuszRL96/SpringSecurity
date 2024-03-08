@@ -1,5 +1,6 @@
-package com.example.main.entity;
+package com.example.main.entity.product;
 
+import com.example.main.entity.category.Category;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductEntity extends Product{
+public class ProductEntity extends Product {
     @Id
     @GeneratedValue(generator = "products_id_seq",strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "products_id_seq",sequenceName = "products_id_seq", allocationSize = 1)

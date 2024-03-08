@@ -1,4 +1,4 @@
-package com.example.main.entity;
+package com.example.main.entity.category;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
