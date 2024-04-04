@@ -58,6 +58,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
                 HttpCookie authCookie = exchange.getRequest().getCookies().get(HttpHeaders.AUTHORIZATION).get(0);
                 HttpCookie refreshCookie = exchange.getRequest().getCookies().get("refresh").get(0);
+                log.info("--START validate Token");
                 try {
                     if (activeProfile.equals("test")){
                         jwtUtil.validateToken(authCookie.getValue());
@@ -74,7 +75,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         HttpHeaders httpHeaders = new HttpHeaders();
                         httpHeaders.add("Cookie",cookies);
                         HttpEntity<Object> entity = new HttpEntity<>(httpHeaders);
-                        ResponseEntity<String> response = template.exchange("http://"+carousel.getUriAuth()+"/api/v1/auth/validate", HttpMethod.GET,entity, String.class);
+                        ResponseEntity<String> response;
+                        if (validator.isAdmin.test(exchange.getRequest())){
+                            response = template.exchange("http://"+carousel.getUriAuth()+"/api/v1/auth/authorize", HttpMethod.GET,entity, String.class);
+                        }else {
+                            response = template.exchange("http://"+carousel.getUriAuth()+"/api/v1/auth/validate", HttpMethod.GET,entity, String.class);
+                        }
 
                         if (response.getStatusCode() == HttpStatus.OK){
                             List<String> cookiesList = response.getHeaders().get(HttpHeaders.SET_COOKIE);

@@ -29,6 +29,8 @@
         <option value="$PROJECT_DIR$/file-services/pom.xml" />
         <option value="$PROJECT_DIR$/file-service/pom.xml" />
         <option value="$PROJECT_DIR$/users/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/RegisterEndpointInformation/pom.xml" />
+        <option value="$PROJECT_DIR$/RegisterEndpointInformation/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

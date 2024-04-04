@@ -168,6 +168,7 @@ public class UserService {
         }
     }
 
+
     public void setAsAdmin(UserRegisterDTO user) {
         userRepository.findUserByLogin(user.getLogin()).ifPresent(value->{
             value.setRole(Role.ADMIN);

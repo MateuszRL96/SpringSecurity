@@ -48,10 +48,10 @@ public class AuthController {
         return userService.login(response, user);
     }
 
-    @RequestMapping(path = "/auto-login", method = RequestMethod.GET)
-    public ResponseEntity<?> autoLogin(HttpServletResponse response, HttpServletRequest request){
+    @RequestMapping(path = "/auto-login",method = RequestMethod.GET)
+    public ResponseEntity<?> autoLogin(HttpServletResponse response,HttpServletRequest request){
         log.info("--TRY AUTO-LOGIN USER");
-        return userService.loginByToken(request, response);
+        return userService.loginByToken(request,response);
     }
 
     @RequestMapping(path = "/logged-in", method = RequestMethod.GET)
