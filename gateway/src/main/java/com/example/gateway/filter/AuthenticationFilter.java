@@ -8,7 +8,9 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.*;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -97,12 +99,22 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                                                     .build());
                                 }
                             }
+                            log.info("Successful login");
                         }
                     }
-                } catch (Exception e) {
-                    exchange.getResponse().writeWith(Flux.just(new DefaultDataBufferFactory().wrap(e.getMessage().getBytes())));
+                } catch (HttpClientErrorException e) {
+                    log.warn("Can't login bad token");
+                    String message  = e.getMessage().substring(7);
+                    message = message.substring(0,message.length()-1);
+                    ServerHttpResponse response = exchange.getResponse();
+                    HttpHeaders headers = response.getHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return exchange.getResponse().writeWith(Flux.just(new DefaultDataBufferFactory().wrap(message.getBytes())));
                 }
             }
+            log.info("--STOP validate Token");
+            log.info("--STOP GatewayFilter");
             return chain.filter(exchange);
         });
     }

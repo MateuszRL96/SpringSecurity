@@ -14,15 +14,14 @@ public class Carousel {
 
     private final EurekaClient eurekaClient;
     List<InstanceInfo> instances = new ArrayList<>();
-
     int currentIndex = 0;
 
     public Carousel(EurekaClient eurekaClient){
         this.eurekaClient = eurekaClient;
         try{
             initAuthCarousel();
-        }catch(NullPointerException e){
-            e.printStackTrace();
+        }catch (NullPointerException e){
+            log.warn("Cant find active instances of Auth Service");
         }
         events();
     }
@@ -41,19 +40,25 @@ public class Carousel {
 
     private void events(){
         eurekaClient.registerEventListener(eurekaEvent -> {
+            log.info("--START initAuthCarousel-registerEvent");
             initAuthCarousel();
+            log.info("--STOP initAuthCarousel-registerEvent");
         });
         eurekaClient.unregisterEventListener(eurekaEvent -> {
-            try {
+            try{
+                log.info("--START initAuthCarousel-unregisterEvent");
                 initAuthCarousel();
-            } catch(NullPointerException e){
-                e.printStackTrace();
+            }catch (NullPointerException e){
+                log.warn("Cant find active instances of Auth Service");
             }
+            log.info("--STOP initAuthCarousel-unregisterEvent");
         });
     }
 
-    private void initAuthCarousel() {
+    private void initAuthCarousel() throws NullPointerException {
+        log.info("--START initAuthCarousel");
         instances = eurekaClient.getApplication("AUTH-SERVICE").getInstances();
+        log.info("--STOP initAuthCarousel");
     }
 }
 
