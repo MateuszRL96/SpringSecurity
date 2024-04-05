@@ -8,7 +8,6 @@ import org.mapstruct.Mappings;
 import org.springframework.stereotype.Component;
 
 @Mapper
-@Component
 public abstract class ProductEntityToSimpleProduct {
     public SimpleProductDTO toSimpleProduct(ProductEntity productEntity){
         return toSimpleProductDTO(productEntity);
@@ -23,3 +22,4 @@ public abstract class ProductEntityToSimpleProduct {
         return  images != null && images.length >= 1 ? images[0] : null;
     }
 }
+
