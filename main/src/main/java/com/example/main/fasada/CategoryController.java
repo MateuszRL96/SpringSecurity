@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1/category")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class CategoryController {
     private final CategoryMediator categoryMediator;
 
