@@ -12,6 +12,7 @@
         <module name="eureka" />
         <module name="gateway" />
         <module name="users" />
+        <module name="RegisterEndpoinyInformation" />
       </profile>
       <profile name="Annotation profile for main" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />

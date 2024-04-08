@@ -44,7 +44,8 @@ public class ProductMediator {
         List<ProductEntity> product = productService.getProduct(name, category, price_min, price_max, data, page, limit, sort, order);
         product.forEach(value->{
             for (int i = 0; i < value.getImageUrls().length; i++){
-                value.getImageUrls()[i] = FILE_SERVICE+"?uuid="+value.getImageUrls()[i];
+                value.getImageUrls()[i] = value.getImageUrls()[i];
+                //value.getImageUrls()[i] = FILE_SERVICE+"?uuid="+value.getImageUrls()[i];
             }
         });
 

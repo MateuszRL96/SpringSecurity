@@ -5,6 +5,7 @@ import com.example.auth.entity.*;
 import com.example.auth.exceptions.UserDontExistException;
 import com.example.auth.exceptions.UserExistingWithEmail;
 import com.example.auth.exceptions.UserExistingWithName;
+import com.example.auth.repo.UserRepository;
 import com.example.auth.services.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,10 +13,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -24,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 //@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     private final UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public ResponseEntity<AuthResponse> addNewUser(@Valid @RequestBody UserRegisterDTO user){
@@ -46,6 +53,18 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response){
         log.info("--TRY LOGIN USER");
         return userService.login(response, user);
+    }
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    @GetMapping("/users")
+    public String getUsers(Model model) {
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "users";
     }
 
     @RequestMapping(path = "/auto-login", method = RequestMethod.GET)

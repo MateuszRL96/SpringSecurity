@@ -62,6 +62,11 @@ public class UserService {
         return  ResponseEntity.ok(new AuthResponse(Code.SUCCESS));
     }
 
+    public ResponseEntity<?> usersShow(){
+        userRepository.showAllUsers();
+        return null;
+    }
+
 
     public void validateToken(HttpServletRequest request, HttpServletResponse response) throws ExpiredJwtException, IllegalArgumentException{
         String token = null;
