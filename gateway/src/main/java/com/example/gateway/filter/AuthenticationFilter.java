@@ -8,7 +8,9 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.*;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,7 +25,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     private final RouteValidator validator;
     private final RestTemplate template;
     private final JwtUtil jwtUtil;
-    @Value("${spring.profiles.active}")
+    @Value("dev")
     private String activeProfile;
     private Carousel carousel;
 
@@ -74,7 +76,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         HttpHeaders httpHeaders = new HttpHeaders();
                         httpHeaders.add("Cookie",cookies);
                         HttpEntity<Object> entity = new HttpEntity<>(httpHeaders);
-                        ResponseEntity<String> response = template.exchange("http://"+carousel.getUriAuth()+"/api/v1/auth/validate", HttpMethod.GET,entity, String.class);
+                        ResponseEntity<String> response;
+                        if (validator.isAdmin.test(exchange.getRequest())){
+                            response = template.exchange("http://"+carousel.getUriAuth()+"/api/v1/auth/authorize", HttpMethod.GET,entity, String.class);
+                        }else {
+                            response = template.exchange("http://"+carousel.getUriAuth()+"/api/v1/auth/validate", HttpMethod.GET,entity, String.class);
+                        }
 
                         if (response.getStatusCode() == HttpStatus.OK){
                             List<String> cookiesList = response.getHeaders().get(HttpHeaders.SET_COOKIE);
@@ -91,12 +98,22 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                                                     .build());
                                 }
                             }
+                            log.info("Successful login");
                         }
                     }
-                } catch (Exception e) {
-                    exchange.getResponse().writeWith(Flux.just(new DefaultDataBufferFactory().wrap(e.getMessage().getBytes())));
+                } catch (HttpClientErrorException e) {
+                    log.warn("Can't login bad token");
+                    String message  = e.getMessage().substring(7);
+                    message = message.substring(0,message.length()-1);
+                    ServerHttpResponse response = exchange.getResponse();
+                    HttpHeaders headers = response.getHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return exchange.getResponse().writeWith(Flux.just(new DefaultDataBufferFactory().wrap(message.getBytes())));
                 }
             }
+            log.info("--STOP validate Token");
+            log.info("--STOP GatewayFilter");
             return chain.filter(exchange);
         });
     }
