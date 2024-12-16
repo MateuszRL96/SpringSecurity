@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,4 +21,44 @@ public class KoszykItems {
     @JoinColumn(name = "koszyk_id")
     private Koszyk koszyk;
     private long quantity;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
+
+    public Koszyk getKoszyk() {
+        return koszyk;
+    }
+
+    public void setKoszyk(Koszyk koszyk) {
+        this.koszyk = koszyk;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
 }
