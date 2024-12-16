@@ -23,6 +23,15 @@
         </processorPath>
         <module name="main" />
       </profile>
+      <profile name="Annotation profile for koszyk" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="koszyk" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="RegisterEndpointInformation" target="17" />
@@ -35,6 +44,7 @@
       <module name="eureka" options="-parameters" />
       <module name="file-service" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="koszyk" options="-parameters" />
       <module name="main" options="-parameters -Amapstruct.defaultComponentModel=spring" />
     </option>
   </component>
