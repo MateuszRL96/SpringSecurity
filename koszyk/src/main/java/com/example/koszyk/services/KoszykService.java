@@ -154,6 +154,7 @@ public class KoszykService {
                     koszykItemRepo.findKoszykItemsByKoszyk(koszyk).forEach(item->{
                         try {
                             Product product = getProduct(item.getProduct());
+                            assert product != null;
                             listkoszykItemDTO.getKoszykProducts().add(new KoszykItemDTO(
                                     product.getUid(),
                                     product.getName(),

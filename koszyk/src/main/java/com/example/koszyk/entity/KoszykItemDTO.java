@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 public class KoszykItemDTO {
     private String uuid;
@@ -14,6 +13,15 @@ public class KoszykItemDTO {
     private String imageUrl;
     private double price;
     private double summaryPrice;
+
+    public KoszykItemDTO(String uuid, String name, long quantity, String imageUrl, double price, double summaryPrice) {
+        this.uuid = uuid;
+        this.name = name;
+        this.quantity = quantity;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.summaryPrice = summaryPrice;
+    }
 
     public String getUuid() {
         return uuid;

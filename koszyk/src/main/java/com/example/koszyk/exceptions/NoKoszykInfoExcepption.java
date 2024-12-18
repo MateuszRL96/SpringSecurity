@@ -1,19 +1,20 @@
 package com.example.koszyk.exceptions;
 
 public class NoKoszykInfoExcepption extends RuntimeException {
-    public NoKoszykInfoException() {
+    public NoKoszykInfoExcepption() {
         super();
     }
 
-    public NoKoszykInfoException(String message) {
+    public NoKoszykInfoExcepption(String message) {
         super(message);
     }
 
-    public NoKoszykInfoException(String message, Throwable cause) {
+    public NoKoszykInfoExcepption(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NoKoszykInfoException(Throwable cause) {
+    public NoKoszykInfoExcepption(Throwable cause) {
         super(cause);
     }
+
 }
