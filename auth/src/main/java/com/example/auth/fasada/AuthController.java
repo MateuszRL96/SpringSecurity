@@ -48,16 +48,16 @@ public class AuthController {
         return userService.login(response, user);
     }
 
-    @RequestMapping(path = "/auto-login", method = RequestMethod.GET)
-    public ResponseEntity<?> autoLogin(HttpServletResponse response, HttpServletRequest request){
+    @RequestMapping(path = "/auto-login",method = RequestMethod.GET)
+    public ResponseEntity<?> autoLogin(HttpServletResponse response,HttpServletRequest request){
         log.info("--TRY AUTO-LOGIN USER");
-        return userService.loginByToken(request, response);
+        return userService.loginByToken(request,response);
     }
 
-    @RequestMapping(path = "/logged-in", method = RequestMethod.GET)
-    public ResponseEntity<?> loggedIn(HttpServletResponse response, HttpServletRequest request){
+    @RequestMapping(path = "/logged-in",method = RequestMethod.GET)
+    public ResponseEntity<?> loggedIn(HttpServletResponse response,HttpServletRequest request){
         log.info("--CHECK USER LOGGED-IN");
-        return userService.loggedIn(request, response);
+        return userService.loggedIn(request,response);
     }
 
     @RequestMapping(path = "/logout",method = RequestMethod.GET)
@@ -68,14 +68,34 @@ public class AuthController {
 
 
     @RequestMapping(path = "/validate",method = RequestMethod.GET)
-    public ResponseEntity<AuthResponse> validateToken(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<AuthResponse> validateToken(HttpServletRequest request,HttpServletResponse response) {
         try{
-            userService.validateToken(request, response);
+            log.info("--START validateToken");
+            userService.validateToken(request,response);
+            log.info("--STOP validateToken");
             return ResponseEntity.ok(new AuthResponse(Code.PERMIT));
         }catch (IllegalArgumentException | ExpiredJwtException e){
+            log.info("Token is not correct");
             return ResponseEntity.status(401).body(new AuthResponse(Code.A3));
         }
     }
+    @RequestMapping(path = "/authorize",method = RequestMethod.GET)
+    public ResponseEntity<AuthResponse> authorize(HttpServletRequest request,HttpServletResponse response) {
+        try{
+            log.info("--START authorize");
+            userService.validateToken(request,response);
+            userService.authorize(request);
+            log.info("--STOP authorize");
+            return ResponseEntity.ok(new AuthResponse(Code.PERMIT));
+        }catch (IllegalArgumentException | ExpiredJwtException e){
+            log.info("Token is not correct");
+            return ResponseEntity.status(401).body(new AuthResponse(Code.A3));
+        }catch (UserDontExistException e1){
+            log.info("User dont exist");
+            return ResponseEntity.status(401).body(new AuthResponse(Code.A1));
+        }
+    }
+
 
     @RequestMapping(path = "/activate",method = RequestMethod.GET)
     public ResponseEntity<AuthResponse> activateUser(@RequestParam String uid){

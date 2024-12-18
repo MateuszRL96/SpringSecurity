@@ -1,7 +1,7 @@
 package com.example.main.service;
 
 
-import com.example.main.entity.ProductEntity;
+import com.example.main.entity.product.ProductEntity;
 import com.example.main.repo.CategoryRepository;
 import com.example.main.repo.ProductRepository;
 import jakarta.persistence.EntityManager;

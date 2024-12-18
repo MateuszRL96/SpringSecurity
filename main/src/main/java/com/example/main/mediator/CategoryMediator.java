@@ -1,6 +1,6 @@
 package com.example.main.mediator;
 
-import com.example.main.entity.CategoryDTO;
+import com.example.main.entity.category.CategoryDTO;
 import com.example.main.exceptions.ObjectExistInDBException;
 import com.example.main.service.CategoryService;
 import com.example.main.translator.CategoryToCategoryDTO;

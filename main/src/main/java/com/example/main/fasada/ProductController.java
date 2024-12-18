@@ -2,7 +2,7 @@ package com.example.main.fasada;
 
 
 import com.example.main.entity.Response;
-import com.example.main.entity.ProductFormDTO;
+import com.example.main.entity.product.ProductFormDTO;
 import com.example.main.mediator.ProductMediator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/product")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*",maxAge = 3600,allowedHeaders = "*",exposedHeaders = "X-Total-Count")
+@CrossOrigin(origins = "*",maxAge = 3600,allowedHeaders = "*",exposedHeaders = "X-Total-Count")
 public class ProductController {
 
     private final ProductMediator productMediator;

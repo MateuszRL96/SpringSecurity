@@ -7,10 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="RegisterEndpointInformation" />
         <module name="auth" />
         <module name="file-service" />
         <module name="eureka" />
         <module name="gateway" />
+        <module name="users" />
       </profile>
       <profile name="Annotation profile for main" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -48,6 +50,7 @@
       <module name="koszyk" options="-parameters" />
       <module name="main" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="qualifications" options="-parameters" />
+
     </option>
   </component>
 </project>
