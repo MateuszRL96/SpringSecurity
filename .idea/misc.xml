@@ -28,12 +28,10 @@
         <option value="$PROJECT_DIR$/main/pom.xml" />
         <option value="$PROJECT_DIR$/file-services/pom.xml" />
         <option value="$PROJECT_DIR$/file-service/pom.xml" />
-        <option value="$PROJECT_DIR$/users/pom.xml" />
-        <option value="$PROJECT_DIR$/gateway/RegisterEndpointInformation/pom.xml" />
-        <option value="$PROJECT_DIR$/RegisterEndpointInformation/pom.xml" />
+        <option value="$PROJECT_DIR$/koszyk/pom.xml" />
+        <option value="$PROJECT_DIR$/qualifications/pom.xml" />
       </list>
     </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
