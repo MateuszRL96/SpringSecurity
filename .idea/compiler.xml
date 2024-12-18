@@ -23,13 +23,14 @@
         </processorPath>
         <module name="main" />
       </profile>
-      <profile name="Annotation profile for koszyk" enabled="true">
+      <profile name="Annotation profile for qualifications" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="qualifications" />
         <module name="koszyk" />
       </profile>
     </annotationProcessing>
@@ -46,6 +47,7 @@
       <module name="gateway" options="-parameters" />
       <module name="koszyk" options="-parameters" />
       <module name="main" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="qualifications" options="-parameters" />
     </option>
   </component>
 </project>
