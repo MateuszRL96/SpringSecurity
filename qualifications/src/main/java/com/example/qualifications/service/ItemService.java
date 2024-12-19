@@ -15,12 +15,12 @@ import java.util.List;
 public class ItemService {
     private ItemRepository itemRepository;
 
-    public QualificationItems save(KoszykItems items){
+    public QualificationItems save(QualificationItems items){
         return itemRepository.saveAndFlush(items);
     }
 
     public List<QualificationItems> getByQualification(Qualification items){
-        return itemRepository.findOrderItemsByOrder(items);
+        return itemRepository.findQualificationItemsByQualification(items);
     }
 }
 

@@ -35,6 +35,7 @@ public class Qualification{
     @ManyToOne
     @JoinColumn(name = "deliver")
     private Deliver deliver;
+    private String extOrderId;
 
     public long getId() {
         return id;
@@ -48,7 +49,7 @@ public class Qualification{
         return uuid;
     }
 
-    public static void setUuid(String uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -56,7 +57,7 @@ public class Qualification{
         return qualification;
     }
 
-    public static void setQualification(String qualification) {
+    public void setQualification(String qualification) {
         this.qualification = qualification;
     }
 
@@ -64,7 +65,7 @@ public class Qualification{
         return status;
     }
 
-    public static void setStatus(Status status) {
+    public  void setStatus(Status status) {
         this.status = status;
     }
 
@@ -144,8 +145,12 @@ public class Qualification{
         return deliver;
     }
 
-    public static void setDeliver(Deliver deliver) {
+    public void setDeliver(Deliver deliver) {
         this.deliver = deliver;
+    }
+
+    public String getExtOrderId() {
+        return extOrderId;
     }
 }
 

@@ -40,7 +40,7 @@ public class QualificationItems {
         return qualification;
     }
 
-    public static void setQualification(Qualification qualification) {
+    public void setQualification(Qualification qualification) {
         this.qualification = qualification;
     }
 
@@ -56,7 +56,7 @@ public class QualificationItems {
         return uuid;
     }
 
-    public static void setUuid(String uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

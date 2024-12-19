@@ -16,7 +16,7 @@ public class QualificationDTO {
     private Status status;
     private CustomDetails customDetails;
     private RabbitConnectionDetails.Address address;
-    private DeliverDTO deliver;
+    private static DeliverDTO deliver;
     private List<Items> items;
     private double summaryPrice;
 
@@ -72,7 +72,7 @@ public class QualificationDTO {
         return items;
     }
 
-    public static void setItems(List<Items> items) {
+    public void setItems(List<Items> items) {
         this.items = items;
     }
 
@@ -80,7 +80,7 @@ public class QualificationDTO {
         return summaryPrice;
     }
 
-    public static void setSummaryPrice(double summaryPrice) {
+    public void setSummaryPrice(double summaryPrice) {
         this.summaryPrice = summaryPrice;
     }
 }

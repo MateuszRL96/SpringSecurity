@@ -8,8 +8,8 @@ import org.mapstruct.Mappings;
 
 
 @Mapper
-public class QualificationToQualificationDTO {
-    public static QualificationDTO toQualificationDTO(Qualification qualification){
+public abstract class QualificationToQualificationDTO {
+    public QualificationDTO toQualificationDTO(Qualification qualification){
         return translate(qualification);
     }
 

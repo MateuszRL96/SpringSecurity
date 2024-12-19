@@ -1,14 +1,14 @@
 package com.example.qualifications.translators;
 
 import com.example.qualifications.entity.Items;
-import com.example.qualifications.entity.QualificationItems;
+import com.example.qualifications.entity.Qualification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 @Mapper
-public class QualificationItemsToItems {
-    public static Items toItems(QualificationItems qualificationItems){
+public abstract class QualificationItemsToItems {
+    public Items toItems(Qualification qualificationItems){
         return translate(qualificationItems);
     }
 
@@ -18,6 +18,6 @@ public class QualificationItemsToItems {
             @Mapping(target = "price", source ="priceUnit"),
             @Mapping(target = "summaryPrice", source ="priceSummary"),
     })
-    protected abstract Items translate(QualificationItems qualificationItems);
+    protected abstract Items translate(Qualification qualificationItems);
 }
 

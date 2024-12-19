@@ -1,15 +1,15 @@
 package com.example.qualifications.translators;
 
 
-import com.example.koszyk.entity.KoszykItems;
 import com.example.qualifications.entity.KoszykItemDTO;
+import com.example.qualifications.entity.QualificationItems;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 @Mapper
 public class KoszykItemDTOToQualificationItems {
-    public KoszykItems toQualificationItems(KoszykItemDTO koszykItemDTO){
+    public QualificationItems toQualificationItems(KoszykItemDTO koszykItemDTO){
         return translate(koszykItemDTO);
     }
 
@@ -20,7 +20,7 @@ public class KoszykItemDTOToQualificationItems {
             @Mapping(target = "priceUnit", source = "price"),
             @Mapping(target = "priceSummary", source = "summaryPrice"),
     })
-    protected KoszykItems translate(KoszykItemDTO koszykItemDTO) {
+    protected QualificationItems translate(KoszykItemDTO koszykItemDTO) {
         return null;
     }
 }

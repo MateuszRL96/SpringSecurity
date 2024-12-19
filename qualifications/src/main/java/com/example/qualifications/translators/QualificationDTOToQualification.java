@@ -11,7 +11,7 @@ import org.mapstruct.Mappings;
 @Mapper
 public abstract class QualificationDTOToQualification {
 
-    public static Qualification toQualification(QualificationDTO qualificationDTO){
+    public Qualification toQualification(QualificationDTO qualificationDTO){
         return translate(qualificationDTO);
     }
 

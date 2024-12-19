@@ -14,14 +14,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@RequiredArgsConstructor
 public class KoszykService {
-    private final RestTemplate restTemplate;
-    @Value("${koszyk.service}")
-    private String KOSZYK_URL;
-
-    public KoszykService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private RestTemplate restTemplate;
+    private String KOSZYK_URL="http://localhost:8888/api/v1/basket";
 
     public ListKoszykItemDTO getKoszyk(Cookie value) {
         HttpHeaders headers = new HttpHeaders();

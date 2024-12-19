@@ -1,10 +1,16 @@
 package com.example.koszyk.config;
 
 import com.example.koszyk.entity.Response;
+
 import jakarta.annotation.PostConstruct;
-import jakarta.websocket.Endpoint;
 import lombok.Value;
-import org.springframework.http.HttpMethod;
+import org.example.ApiGatewayEndpointConfiguration;
+import org.example.enntity.Role;
+import org.example.enntity.Endpoint;
+import org.example.enntity.HttpMethod;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -12,8 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ApiGatewayEndpointConfigurationImpl implements ApiGatewayEndpointConfiguration {
 
-    @Value("${api-gateway.url}")
-    private String GATEWAY_URL;
+    private static final Logger logger = LoggerFactory.getLogger(ApiGatewayEndpointConfigurationImpl.class);
 
     @PostConstruct
     public void startOperation(){
@@ -31,7 +36,14 @@ public class ApiGatewayEndpointConfigurationImpl implements ApiGatewayEndpointCo
     @Override
     public void register() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Response> response = restTemplate.postForEntity(GATEWAY_URL, endpointList, Response.class);
-        if (response.getStatusCode().isError()) throw new RuntimeException();
+        String GATEWAY_URL = "http://localhost:8888/api/v1/gateway";
+        try {
+            ResponseEntity<Response> response = restTemplate.postForEntity(GATEWAY_URL, endpointList, Response.class);
+            if (response.getStatusCode().isError()) {
+                throw new RuntimeException("Error response from gateway");
+            }
+        } catch (Exception e) {
+            logger.error("Failed to register endpoints with API Gateway", e);
+        }
     }
 }

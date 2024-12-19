@@ -8,9 +8,26 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class Qualification {
+public class Order {
     private String qualificationId;
-    private String extQualificationId;
+
+    public String getExtOrderId() {
+        return extOrderId;
+    }
+
+    public void setExtOrderId(String extOrderId) {
+        this.extOrderId = extOrderId;
+    }
+
+    public String getQualificationCreateDate() {
+        return qualificationCreateDate;
+    }
+
+    public void setQualificationCreateDate(String qualificationCreateDate) {
+        this.qualificationCreateDate = qualificationCreateDate;
+    }
+
+    private String extOrderId;
     private String qualificationCreateDate;
     private String notifyUrl;
     private String customerIp;
@@ -28,14 +45,6 @@ public class Qualification {
 
     public void setQualificationId(String qualificationId) {
         this.qualificationId = qualificationId;
-    }
-
-    public String getExtQualificationId() {
-        return extQualificationId;
-    }
-
-    public void setExtQualificationId(String extQualificationId) {
-        this.extQualificationId = extQualificationId;
     }
 
     public String getqualificationCreateDate() {
