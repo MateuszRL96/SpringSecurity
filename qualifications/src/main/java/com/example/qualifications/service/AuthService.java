@@ -18,9 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthService {
 
-    @Value("${auth.url}")
-    private String auth_url;
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     public UserRegisterDTO getUserDetails(List<Cookie> cookie)  {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -33,6 +31,7 @@ public class AuthService {
         httpHeaders.add("Cookie",cookieString.toString());
         HttpEntity<Void> requestEntity = new HttpEntity<>(httpHeaders);
         try{
+            String auth_url = "http://localhost:8888/api/v1/auth/auto-login";
             ResponseEntity<UserRegisterDTO> response = restTemplate.exchange(auth_url, HttpMethod.GET,requestEntity, UserRegisterDTO.class);
             return response.getStatusCode().isError() ? null : response.getBody();
         }catch (HttpClientErrorException e){

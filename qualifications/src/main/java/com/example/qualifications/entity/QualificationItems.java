@@ -9,8 +9,6 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Table
 @Entity
 public class QualificationItems {
@@ -29,4 +27,68 @@ public class QualificationItems {
     private double priceUnit;
     @Column(name = "pricesummary")
     private double priceSummary;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Qualification getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(Qualification qualification) {
+        this.qualification = qualification;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPriceUnit() {
+        return priceUnit;
+    }
+
+    public void setPriceUnit(double priceUnit) {
+        this.priceUnit = priceUnit;
+    }
+
+    public double getPriceSummary() {
+        return priceSummary;
+    }
+
+    public void setPriceSummary(double priceSummary) {
+        this.priceSummary = priceSummary;
+    }
 }

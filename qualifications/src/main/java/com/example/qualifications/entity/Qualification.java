@@ -35,6 +35,7 @@ public class Qualification{
     @ManyToOne
     @JoinColumn(name = "deliver")
     private Deliver deliver;
+    private String extOrderId;
 
     public long getId() {
         return id;
@@ -64,7 +65,7 @@ public class Qualification{
         return status;
     }
 
-    public void setStatus(Status status) {
+    public  void setStatus(Status status) {
         this.status = status;
     }
 
@@ -146,6 +147,10 @@ public class Qualification{
 
     public void setDeliver(Deliver deliver) {
         this.deliver = deliver;
+    }
+
+    public String getExtOrderId() {
+        return extOrderId;
     }
 }
 

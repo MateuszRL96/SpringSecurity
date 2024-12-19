@@ -37,7 +37,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="RegisterEndpointInformation" target="17" />
       <module name="users" target="17" />
     </bytecodeTargetLevel>
   </component>

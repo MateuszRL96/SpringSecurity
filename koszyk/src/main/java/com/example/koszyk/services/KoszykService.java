@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -25,19 +26,12 @@ import java.util.*;
 @RequiredArgsConstructor
 public class KoszykService {
 
-    private final KoszykItemRepo koszykItemRepo;
-    private final KoszykRepo koszykRepo;
-    private final RestTemplate restTemplate;
-    private final CookieService cookieService;
+    private KoszykItemRepo koszykItemRepo;
+    private KoszykRepo koszykRepo;
+    private RestTemplate restTemplate;
+    private CookieService cookieService;
     @Value("${product.service.url}")
     private String PRODUCT_SERVICE_URL;
-
-    public KoszykService(KoszykItemRepo koszykItemRepo, KoszykRepo koszykRepo, RestTemplate restTemplate, CookieService cookieService) {
-        this.koszykItemRepo = koszykItemRepo;
-        this.koszykRepo = koszykRepo;
-        this.restTemplate = restTemplate;
-        this.cookieService = cookieService;
-    }
 
     public ResponseEntity<?> addProduct(KoszykItemadDTO koszykItemadDTO, HttpServletRequest request, HttpServletResponse response){
         HttpHeaders httpHeaders = new HttpHeaders();
