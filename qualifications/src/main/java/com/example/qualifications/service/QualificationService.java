@@ -1,11 +1,11 @@
 package com.example.qualifications.service;
 
+import com.example.koszyk.entity.KoszykItems;
 import com.example.qualifications.entity.*;
-import com.example.qualifications.exception.BasketDontExistException;
-import com.example.qualifications.exception.EmptyBasketException;
-import com.example.qualifications.exception.QualificationDontExistException;
+import com.example.qualifications.exception.*;
 import com.example.qualifications.repo.DeliverRepository;
 import com.example.qualifications.repo.QualificationRepository;
+import com.example.qualifications.translators.KoszykItemDTOToQualificationItems;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,16 +21,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QualificationService {
     private QualificationRepository qualificationRepository;
-    private DeliverRepository deliverRepository;
-    private KoszykService koszykService;
-    private ItemService itemService;
-    private final KoszykItemDTOToQualificationItems koszykItemDTOToItems;
-    private EmailService emailService;
-    private AuthService authService;
+    private static DeliverRepository deliverRepository;
+    private static KoszykService koszykService;
+    private static ItemService itemService;
+    private static KoszykItemDTOToQualificationItems koszykItemDTOToItems;
+    private static EmailService emailService;
+    private static AuthService authService;
 
 
 
-    private Qualification save(Qualification qualification) {
+    private static Qualification save(Qualification qualification) {
         Deliver deliver = deliverRepository.findByUuid(qualification.getDeliver().getUuid()).orElseThrow(UknowDeliverTypException::new);
         StringBuilder stringBuilder = new StringBuilder("Qualification/")
                 .append(QualificationRepository.count())
@@ -42,10 +42,10 @@ public class QualificationService {
         Qualification.setStatus(Status.PENDING);
         Qualification.setQualification(stringBuilder.toString());
         Qualification.setDeliver(deliver);
-        return QualificationRepository.saveAndFlush(Qualification);
+        return QualificationRepository.saveAndFlush(qualification);
     }
     @Transactional
-    public String createQualification(Qualification Qualification, HttpServletRequest request, HttpServletResponse response) {
+    public static String createQualification(Qualification Qualification, HttpServletRequest request, HttpServletResponse response) {
         List<Cookie> cookies = Arrays.stream(request.getCookies()).filter(value->
                         value.getName().equals("Authorization") || value.getName().equals("refresh"))
                 .toList();
@@ -56,15 +56,15 @@ public class QualificationService {
         Qualification finalQualification = save(Qualification);
         AtomicReference<String> result = new AtomicReference<>();
         Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("koszyk")).findFirst().ifPresentOrElse(value -> {
-            ListKoszykItemDTO koszyk = koszykService.getkoszyk(value);
+            ListKoszykItemDTO koszyk = koszykService.getKoszyk(value);
             if (koszyk.getKoszykProducts().isEmpty()) throw new EmptyBasketException();
             List<QualificationItems> items = new ArrayList<>();
             koszyk.getKoszykProducts().forEach(item -> {
-                QualificationItems QualificationItems = koszykItemDTOToItems.toQualificationItems(item);
+                KoszykItems qualificationItems = koszykItemDTOToItems.toQualificationItems(item);
                 QualificationItems.setQualification(finalQualification);
                 QualificationItems.setUuid(UUID.randomUUID().toString());
-                items.add(itemService.save(QualificationItems));
-                koszykService.removekoszyk(value,item.getUuid());
+                items.add(itemService.save(qualificationItems));
+                koszykService.removeKoszyk(value,item.getUuid());
             });
                         value.setMaxAge(0);
             response.addCookie(value);
@@ -74,18 +74,18 @@ public class QualificationService {
         });
         return result.get();
     }
-    public void completeQualification(com.example.Qualification.entity.notify.Notify notify)throws QualificationDontExistException{
+    public static void completeQualification(com.example.qualifications.entity.notify.Notify notify)throws QualificationDontExistException{
         QualificationRepository.findQualificationByQualifications(notify.getQualification().getExtQualificationId()).ifPresentOrElse(value->{
-            value.setStatus(notify.getQualification().getStatus());
+            Qualification.setStatus(notify.getQualification().getStatus());
             QualificationRepository.save(value);
         },()->{
             throw new QualificationDontExistException();
         });
     }
-    public Qualification getQualificationByUuid(String uuid) {
+    public static Qualification getQualificationByUuid(String uuid) {
         return QualificationRepository.findQualificationByUuid(uuid).orElseThrow(QualificationDontExistException::new);
     }
-    public List<Qualification> getQualificationsByClient(String login) {
+    public static List<Qualification> getQualificationsByClient(String login) {
         return QualificationRepository.findQualificationByClient(login);
     }
 }

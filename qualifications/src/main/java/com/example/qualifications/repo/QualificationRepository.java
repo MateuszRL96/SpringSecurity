@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QualificationRepository extends JpaRepository<Qualification,Long> {
-    Optional<Qualification> findOrderByOrders(String orders);
-    Optional<Qualification> findOrderByUuid(String uuid);
-    List<Qualification> findOrderByClient(String client);
+    static Optional<Qualification> findQualificationByQualifications(String qualification);
+    static Optional<Qualification> findQualificationByUuid(String uuid);
+    static List<Qualification> findQualificationByClient(String client);
 }
 

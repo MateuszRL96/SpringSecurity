@@ -16,34 +16,34 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class KoszykService {
     private final RestTemplate restTemplate;
-    @Value("${basket.service}")
-    private String BASKET_URL;
+    @Value("${koszyk.service}")
+    private String KOSZYK_URL;
 
     public KoszykService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public ListKoszykItemDTO getBasket(Cookie value) {
+    public ListKoszykItemDTO getKoszyk(Cookie value) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cookie", value.getName()+"="+value.getValue());
         ResponseEntity<ListKoszykItemDTO> response;
         try{
-            response =restTemplate.exchange(BASKET_URL,
+            response =restTemplate.exchange(KOSZYK_URL,
                     HttpMethod.GET,
                     new HttpEntity<String>(headers),
                     ListKoszykItemDTO.class);
         }catch (HttpClientErrorException e){
-            throw new BasketDontExistException("Basket don't exist");
+            throw new BasketDontExistException("koszyk don't exist");
         }
 
-        if (response.getStatusCode().isError()) throw new BasketDontExistException("Basket don't exist");
+        if (response.getStatusCode().isError()) throw new BasketDontExistException("koszyk don't exist");
         return response.getBody();
     }
 
-    public void removeBasket(Cookie value,String uuid) {
+    public void removeKoszyk(Cookie value,String uuid) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Cookie", value.getName()+"="+value.getValue());
-        restTemplate.exchange(BASKET_URL+"?uuid="+uuid,
+        restTemplate.exchange(KOSZYK_URL+"?uuid="+uuid,
                 HttpMethod.DELETE,
                 new HttpEntity<String>(headers),
                 String.class);

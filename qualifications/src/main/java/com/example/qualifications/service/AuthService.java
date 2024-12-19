@@ -20,7 +20,7 @@ public class AuthService {
 
     @Value("${auth.url}")
     private String auth_url;
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     public UserRegisterDTO getUserDetails(List<Cookie> cookie)  {
         HttpHeaders httpHeaders = new HttpHeaders();

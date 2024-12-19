@@ -1,6 +1,8 @@
 package com.example.qualifications.service;
 
 
+import com.example.koszyk.entity.KoszykItems;
+import com.example.qualifications.entity.Qualification;
 import com.example.qualifications.entity.QualificationItems;
 import com.example.qualifications.repo.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +13,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-    private final ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
-    public QualificationItems save(QualificationItems items){
+    public QualificationItems save(KoszykItems items){
         return itemRepository.saveAndFlush(items);
     }
 
-    public List<QualificationItems> getByOrder(QualificationItems items){
+    public List<QualificationItems> getByQualification(Qualification items){
         return itemRepository.findOrderItemsByOrder(items);
     }
 }

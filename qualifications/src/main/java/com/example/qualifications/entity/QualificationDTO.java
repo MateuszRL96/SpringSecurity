@@ -10,8 +10,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class QualificationDTO {
     private String uuid;
     private String orders;
@@ -21,5 +19,69 @@ public class QualificationDTO {
     private DeliverDTO deliver;
     private List<Items> items;
     private double summaryPrice;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getOrders() {
+        return orders;
+    }
+
+    public void setOrders(String orders) {
+        this.orders = orders;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public CustomDetails getCustomDetails() {
+        return customDetails;
+    }
+
+    public void setCustomDetails(CustomDetails customDetails) {
+        this.customDetails = customDetails;
+    }
+
+    public RabbitConnectionDetails.Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(RabbitConnectionDetails.Address address) {
+        this.address = address;
+    }
+
+    public static DeliverDTO getDeliver() {
+        return deliver;
+    }
+
+    public void setDeliver(DeliverDTO deliver) {
+        this.deliver = deliver;
+    }
+
+    public List<Items> getItems() {
+        return items;
+    }
+
+    public static void setItems(List<Items> items) {
+        this.items = items;
+    }
+
+    public double getSummaryPrice() {
+        return summaryPrice;
+    }
+
+    public static void setSummaryPrice(double summaryPrice) {
+        this.summaryPrice = summaryPrice;
+    }
 }
 
